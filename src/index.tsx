@@ -73,6 +73,8 @@ export interface SliderProps {
 const clamp = (input: number, lower: number, upper: number) =>
 	Math.min(Math.max(input, lower), upper);
 
+const SWIPE_DISTANCE_THRESHOLD = 10;
+
 const Slider: React.FunctionComponent<SliderProps> = ({
 	activeIndex = 0,
 	ArrowComponent,
@@ -122,7 +124,8 @@ const Slider: React.FunctionComponent<SliderProps> = ({
 						width,
 					} = sliderRef.current.parentElement.getBoundingClientRect();
 
-					if (down && distance > width / 2) {
+					// react-gesture bug fix - wrong distance calculation on mobile (on mobile swipe distance is in range of 5-15, on desktop about 400)
+					if (down && distance > SWIPE_DISTANCE_THRESHOLD) {
 						if (cancel) cancel();
 						if (active) {
 							setSlide(
