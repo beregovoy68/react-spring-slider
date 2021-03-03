@@ -132,7 +132,8 @@ const Slider: React.FunctionComponent<SliderProps> = ({
 								clamp(
 									slide + (xDir > 0 ? -1 : 1),
 									0,
-									children.length - slidesAtOnce
+									// fix to be able to swipe slides to the last one when slidesAtOnce are set to > 1
+									children.length - 1
 								)
 							);
 						}
